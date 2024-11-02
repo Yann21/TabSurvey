@@ -1,4 +1,5 @@
-from utils.io_utils import get_predictions_from_file, save_results_to_file
+#%%
+from utils.io_utils import get_predictions_from_file
 from utils.parser import get_given_parameters_parser
 from utils.scorer import get_scorer
 
@@ -21,16 +22,14 @@ def main(args):
         scorer.eval(truth, pred_label, out)
 
     result = scorer.get_results()
-    print(result)
-
-    save_results_to_file(args, result)
+    return result
 
 
-if __name__ == "__main__":
+# Also load the best parameters
+parser = get_given_parameters_parser()
+arguments = parser.parse_args(args=["--model_name", "KNN", "--config", "config/adult.yml"])
+print(arguments)
 
-    # Also load the best parameters
-    parser = get_given_parameters_parser()
-    arguments = parser.parse_args()
-    print(arguments)
-
-    main(arguments)
+results = main(arguments)
+#%%
+results
